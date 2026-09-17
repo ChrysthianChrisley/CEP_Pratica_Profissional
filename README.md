@@ -16,11 +16,11 @@ Este repositório reúne toda a documentação institucional, portfólio de prá
 
 ---
 
-## ⚙️ Especificações Técnicas do Protótipo (Atualizadas)
+## ⚙️ Especificações Técnicas do Protótipo (Versão com Sensirion SHT31-D)
 * **Microcontrolador:** **Wemos Lolin D32 V1** (ESP32 ESP-WROOM-32, clock de 240MHz, Wi-Fi 802.11 b/g/n, Bluetooth/BLE, **16MB Flash**, **8MB PSRAM**, slot para cartão MicroSD/TF integrado em modo SPI, dimensões de 65 x 25,4 mm e peso ultraleve de apenas **7,5g**).
 * **Alimentação:** **Bateria de Polímero de Lítio (LiPo) 3.7V 600mAh** com cabo conector polarizado **JST PH 2.0mm**, acoplada diretamente à interface de gerenciamento de carga da placa (máx 500mA), proporcionando um módulo de tornozelo plano, leve e de alta segurança.
-* **Sensores de Pressão:** 3 sensores piezorresistivos **FSR 402** posicionados nas regiões anatômicas de maior sobrecarga mecânica (antepé/metatarsos e retropé/calcâneo).
-* **Sensor de Temperatura e Umidade:** Sensor digital **DHT22** (com suporte I2C nativo no Lolin D32 para migração futura ao SHT31 na v2).
+* **Sensores de Pressão Plantar:** 3 sensores piezorresistivos **FSR 402** posicionados nas regiões anatômicas de maior sobrecarga mecânica (antepé/metatarsos e retropé/calcâneo).
+* **Sensor de Temperatura e Umidade:** **Sensirion SHT31-D** (Breakout Board I2C com resistores pull-up de 10k e capacitores integrados, compatível com 3.3V, alta precisão de **±0,3°C** e **±2% UR**, endereço I2C configurável 0x44/0x45 e perfil ultraplano que elimina atrito mecânico na sola do pé).
 * **Armazenamento Seguro:** Gravação local de redundância no cartão MicroSD em caso de oscilação do link Bluetooth durante a marcha.
 * **Software:** Aplicativo móvel **"Monitor do Pé"** (HTML5/JavaScript) com mapa anatômico plantar em escala de cores e alertas em tempo real.
 * **Inteligência Artificial:** Modelo preditivo baseado em **Random Forest** integrando pressão plantar, temperatura, umidade relativa e variáveis clínicas para estratificação precoce de risco de ulceração no pé diabético.

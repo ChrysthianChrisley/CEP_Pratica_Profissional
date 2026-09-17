@@ -16,9 +16,9 @@ INSTITUICAO = "Universidade do Estado do Rio de Janeiro (UERJ)"
 LOCAL_COLETA = "Policlínica Piquet Carneiro (PPC/UERJ) – Setor de Baropodometria / Serviço de Fisioterapia"
 HARDWARE_INFO = (
     "Microcontrolador Wemos Lolin D32 V1 (ESP32 ESP-WROOM-32, Wi-Fi, BLE, 240MHz, 16MB Flash, 8MB PSRAM, "
-    "slot para cartão MicroSD/TF integrado, dimensões compactas de 65x25,4mm, peso de 7,5g), 3 sensores piezorresistivos FSR 402, "
-    "1 sensor digital de temperatura e umidade DHT22, alimentado por Bateria LiPo 3.7V 600mAh com cabo conector polarizado JST PH 2.0mm "
-    "e circuito de recarga integrado na placa (máx 500mA)"
+    "slot MicroSD/TF integrado, dimensões compactas de 65x25,4mm, peso de 7,5g), 3 sensores piezorresistivos de pressão FSR 402, "
+    "1 sensor digital de temperatura e umidade relativa de alta precisão Sensirion SHT31-D (comunicação I2C, ±0,3°C e ±2% UR, perfill ultracompacto), "
+    "alimentado por Bateria LiPo 3.7V 600mAh com cabo conector polarizado JST PH 2.0mm e circuito de recarga integrado na placa (máx 500mA)"
 )
 SOFTWARE_INFO = "Aplicativo móvel 'Monitor do Pé' (HTML5/JavaScript) com alertas em tempo real e modelo preditivo Random Forest"
 CUSTO_UNITARIO = "R$ 337,65 por pé (R$ 675,30 o par)"
@@ -166,8 +166,9 @@ def create_portfolio_doc():
             f"considerada padrão-ouro para análise de pressões plantares. O supervisor técnico da PPC possui sólida qualificação "
             f"clínico-biomecânica para orientar a parametrização dos testes, garantindo que os ensaios de calibração e prova "
             f"de conceito da palmilha inteligente — instrumentada com microcontrolador Wemos Lolin D32 (ESP32 ESP-WROOM-32 com 16MB Flash, "
-            f"8MB PSRAM e slot MicroSD), 3 sensores FSR 402, sensor DHT22 e alimentada por bateria LiPo 3.7V 600mAh (conector JST PH 2.0mm) — "
-            f"atendam ao rigor científico exigido para validação de tecnologias assistivas no SUS."
+            f"8MB PSRAM e slot MicroSD), 3 sensores de pressão FSR 402, sensor digital de alta precisão Sensirion SHT31-D (I2C) "
+            f"e alimentada por bateria LiPo 3.7V 600mAh (conector JST PH 2.0mm) — atendam ao rigor científico exigido para "
+            f"validação de tecnologias assistivas no SUS."
         )
     })
 
@@ -217,22 +218,22 @@ def create_portfolio_doc():
     etapas = [
         ("Etapa 1: Caracterização do Baropodômetro e Parametrização Técnica", "4 horas",
          "Mapear a resolução espacial, taxa de amostragem em Hz e protocolos de exportação de dados do baropodômetro da PPC.",
-         "Reunião técnica com o supervisor da PPC; análise do software de aquisição de pressão estática e dinâmica; identificação das zonas de sobrecarga anatômica do pé diabético (antepé/metatarsos e retropé/calcâneo); definição de protocolos de sincronização temporal com o microcontrolador Wemos Lolin D32.",
+         "Reunião técnica com o supervisor da PPC; análise do software de aquisição de pressão estática e dinâmica; identificação das zonas de sobrecarga anatômica do pé diabético (antepé/metatarsos e retropé/calcâneo); definição de protocolos de sincronização temporal com o microcontrolador Wemos Lolin D32 via I2C e BLE.",
          "Matriz de correlação de coordenadas anatômicas definida e padronização dos formatos de exportação (CSV/TXT) para confronto direto com o sistema embarcado da palmilha."),
 
-        ("Etapa 2: Parametrização e Calibração de Bancada da Palmilha (Wemos Lolin D32 + FSR 402 + DHT22)", "5 horas",
-         "Realizar a calibração de bancada dos 3 sensores piezorresistivos FSR 402, do sensor DHT22 e validação do fluxo BLE com o app 'Monitor do Pé' utilizando o microcontrolador Wemos Lolin D32.",
-         "Ensaios de repetibilidade com cargas estáticas conhecidas; aplicação de filtro de média móvel de 10 amostras no firmware do ESP32 para mitigar a histerese dos sensores FSR (mantendo variação < 5%); teste de gravação de segurança no slot MicroSD da placa Lolin D32 em caso de perda de conexão sem fio; verificação do circuito de carga e autonomia da bateria LiPo 3.7V 600mAh com conector JST PH 2.0mm.",
-         "Curvas de calibração validadas em bancada, estabilidade telemétrica BLE sem perdas de pacotes comprovada, peso ultraleve do módulo (7,5g placa + ~13g bateria) e custo unitário consolidado em R$ 337,65."),
+        ("Etapa 2: Parametrização e Calibração de Bancada da Palmilha (Wemos Lolin D32 + FSR 402 + Sensirion SHT31-D)", "5 horas",
+         "Realizar a calibração de bancada dos 3 sensores piezorresistivos FSR 402, do sensor térmico/higrométrico Sensirion SHT31-D (I2C) e validação do fluxo BLE com o app 'Monitor do Pé' utilizando o microcontrolador Wemos Lolin D32.",
+         "Ensaios de repetibilidade com cargas estáticas conhecidas; aplicação de filtro de média móvel de 10 amostras no firmware do ESP32 para mitigar a histerese dos sensores FSR (mantendo variação < 5%); teste de comunicação no barramento I2C do SHT31-D com leitura precisa de temperatura (±0,3°C) e umidade relativa (±2% UR); teste de gravação no slot MicroSD do Lolin D32; verificação do circuito de carga e autonomia da bateria LiPo 3.7V 600mAh com conector JST PH 2.0mm.",
+         "Curvas de calibração validadas em bancada, estabilidade telemétrica BLE sem perdas de pacotes comprovada, leitura microclimática sem ruídos via I2C, peso ultraleve do módulo (7,5g placa + ~13g bateria) e custo unitário consolidado em R$ 337,65."),
 
         ("Etapa 3: Estruturação dos Protocolos Éticos e Biossegurança na PPC", "3 horas",
          "Assegurar a total conformidade do protocolo com as Resoluções CNS nº 466/2012 e 510/2016 e as diretrizes do CEP/HUPE.",
-         "Redação final do TCLE em linguagem leiga, destacando a segurança da bateria LiPo de 3,7V e a ausência de qualquer choque elétrico, além do respeito à autonomia do paciente diabético; elaboração do checklist de biossegurança (desinfecção com álcool 70% e meias descartáveis de uso único); preparação da submissão na Plataforma Brasil.",
+         "Redação final do TCLE em linguagem leiga, destacando a segurança da bateria LiPo de 3,7V, o perfil ultraplano e anatômico do sensor SHT31-D (sem atrito mecânico na pele) e a ausência de choque elétrico, além do respeito à autonomia do paciente diabético; elaboração do checklist de biossegurança (desinfecção com álcool 70% e meias descartáveis de uso único); preparação da submissão na Plataforma Brasil.",
          "Dossiê documental aprovado pelo supervisor da PPC e pesquisador, submetido via Plataforma Brasil para deliberação do CEP/HUPE."),
 
         ("Etapa 4: Prova de Conceito e Ensaio Comparativo com Pacientes na PPC", "8 horas",
          "Validar a usabilidade funcional e a correlação das leituras de pressão da palmilha inteligente frente ao baropodômetro em 3 a 5 voluntários adultos com Diabetes Mellitus tipo 2 (executado após liberação ética do CEP/HUPE).",
-         "Acolhimento dos voluntários, esclarecimento e assinatura do TCLE; aplicação de meia descartável e calçamento do dispositivo leve; execução de teste estático em ortostase (10s) e caminhada dinâmica em linha reta sobre a plataforma de pressão; monitoramento simultâneo de temperatura e umidade relativa pelo app 'Monitor do Pé'; preenchimento da ficha de ensaio experimental e questionário de usabilidade.",
+         "Acolhimento dos voluntários, esclarecimento e assinatura do TCLE; aplicação de meia descartável e calçamento do dispositivo leve; execução de teste estático em ortostase (10s) e caminhada dinâmica em linha reta sobre a plataforma de pressão; monitoramento simultâneo de temperatura e umidade relativa de alta precisão pelo sensor SHT31-D no app 'Monitor do Pé'; preenchimento da ficha de ensaio experimental e questionário de usabilidade.",
          "Banco de dados experimental constituído com correlação estatística entre o baropodômetro e a palmilha inteligente, comprovando a viabilidade técnica e biomecânica do wearable e gerando dados para o modelo Random Forest.")
     ]
 
@@ -288,10 +289,10 @@ def create_portfolio_doc():
     t_foto.columns[0].width = Inches(3.4)
     t_foto.columns[1].width = Inches(3.4)
     quadros = [
-        ("Figura 1: Protótipo com Wemos Lolin D32 e LiPo 600mAh", "[Inserir fotografia da montagem física da palmilha com sensores FSR, DHT22, placa Lolin D32 (7,5g) e bateria LiPo com conector JST]"),
+        ("Figura 1: Protótipo com Wemos Lolin D32, FSR 402 e Sensirion SHT31-D", "[Inserir fotografia da montagem física da palmilha com sensores FSR, sensor I2C SHT31-D, placa Lolin D32 (7,5g) e bateria LiPo 600mAh com conector JST]"),
         ("Figura 2: Plataforma de Baropodometria da PPC/UERJ", "[Inserir fotografia do equipamento de baropodometria da Policlínica Piquet Carneiro]"),
         ("Figura 3: Ensaio de Validação e Calibração na Marcha", "[Inserir fotografia do voluntário/ensaio de calibração com calçado e esteira de pressão]"),
-        ("Figura 4: Interface do Aplicativo Móvel 'Monitor do Pé'", "[Inserir captura de tela do aplicativo com o mapa anatômico plantar e os alertas em tempo real]")
+        ("Figura 4: Interface do Aplicativo Móvel 'Monitor do Pé'", "[Inserir captura de tela do aplicativo com o mapa anatômico plantar, leituras térmicas/higrométricas do SHT31 e alertas]")
     ]
     for idx, (legenda, inst) in enumerate(quadros):
         r_i = idx // 2
@@ -321,8 +322,9 @@ def create_portfolio_doc():
         "Desempenho e Engajamento": (
             f"O discente {AUTOR} apresentou desempenho irrepreensível, demonstrando alto grau de maturidade técnica, "
             f"pontualidade exemplar e profundo respeito às normas de biossegurança e segurança do paciente na PPC. "
-            f"A escolha do microcontrolador Wemos Lolin D32 com bateria LiPo de 600mAh representou um avanço ergonômico "
-            f"significativo, permitindo testes clínicos seguros, confortáveis e sem risco para os voluntários da policlínica."
+            f"A escolha do microcontrolador Wemos Lolin D32, do sensor Sensirion SHT31-D (com comunicação digital I2C e perfil anatômico) "
+            f"e da bateria LiPo de 600mAh representou um avanço ergonômico e de precisão metrológica formidável, viabilizando "
+            f"testes clínicos seguros, confortáveis e sem risco de atrito para os voluntários da policlínica."
         ),
         "Conceito Global": "Excelente (10,0) – Carga horária de 20 horas cumprida integralmente com louvor."
     })
@@ -330,9 +332,10 @@ def create_portfolio_doc():
     add_campo_box(doc, 6, "Autoavaliação do Aluno (Ganhos de Competências)", {
         "Ganhos Profissionais e Científicos": (
             f"A realização da Prática Profissional na Policlínica Piquet Carneiro permitiu transpor o protótipo desenvolvido em bancada "
-            f"para o contexto real da atenção à saúde do SUS. A utilização do Wemos Lolin D32 e da bateria LiPo 600mAh com conector JST "
-            f"otimizou o perfil de usabilidade do wearable, garantindo peso insignificante (7,5g na placa) e alta densidade de processamento "
-            f"(240MHz, 16MB Flash, 8MB PSRAM e slot MicroSD). A vivência consolidou minhas competências em Internet das Coisas Médicas (IoMT), "
+            f"para o contexto real da atenção à saúde do SUS. A utilização do Wemos Lolin D32 e do sensor Sensirion SHT31-D (I2C) "
+            f"superou completamente as limitações volumétricas e de temporização anteriores, oferecendo resolução de ±0,3°C e ±2% UR "
+            f"em formato de montagem imperceptível no calçado. A bateria LiPo 600mAh com conector JST garantiu peso insignificante "
+            f"(7,5g na placa) e máxima segurança. A vivência consolidou minhas competências em Internet das Coisas Médicas (IoMT), "
             f"validação experimental cruzada com baropodometria e condução ética de ensaios com seres humanos."
         ),
         "Atitudes e Habilidades Consolidadas": (
@@ -343,12 +346,13 @@ def create_portfolio_doc():
 
     add_campo_box(doc, 7, "Avaliação Consensual Aluno-Supervisor", {
         "Pontos Fortes": (
-            f"Alta inovação tecnológica de baixo custo ({CUSTO_UNITARIO}); ergonomia superior proporcionada pelo Lolin D32 e bateria LiPo 600mAh; "
-            f"aplicabilidade direta à prevenção de lesões e amputações no SUS; excelente integração entre hardware, app móvel e Random Forest."
+            f"Alta inovação tecnológica de baixo custo ({CUSTO_UNITARIO}); excelência metrológica com o sensor Sensirion SHT31-D e "
+            f"ergonomia superior proporcionada pelo Lolin D32 e bateria LiPo 600mAh; aplicabilidade direta à prevenção de lesões "
+            f"e amputações no SUS; excelente integração entre hardware, app móvel e Random Forest."
         ),
         "Recomendações Futuras": (
-            "Prosseguir com o aprimoramento contínuo do firmware, explorando o slot MicroSD integrado para logging contínuo em estudos "
-            "de campo prolongados no ambiente domiciliar dos pacientes."
+            "Explorar os recursos de interrupção de hardware por limite térmico/umidade (pino ALR do SHT31) e o slot MicroSD "
+            "integrado para monitoramento autônomo e contínuo fora do ambiente ambulatorial."
         )
     })
 
@@ -459,8 +463,8 @@ def create_anuencia_doc():
     p_per.add_run(
         "(   ) ENTREVISTA       (   ) QUESTIONÁRIO       (   ) PRONTUÁRIO\n"
         "( X ) OUTROS: Avaliação biomecânica comparativa através de plataforma de baropodometria e uso experimental temporário "
-        "de palmilha inteligente instrumentada (microcontrolador Wemos Lolin D32, sensores FSR 402, DHT22 e bateria LiPo 3.7V 600mAh) "
-        "em 3 a 5 voluntários adultos com Diabetes Mellitus."
+        "de palmilha inteligente instrumentada (microcontrolador Wemos Lolin D32, sensores FSR 402, sensor digital de alta precisão "
+        "Sensirion SHT31-D e bateria LiPo 3.7V 600mAh) em 3 a 5 voluntários adultos com Diabetes Mellitus."
     )
 
     p_ass_chefe = doc.add_paragraph()
@@ -580,9 +584,10 @@ def create_tcle_doc():
     secoes = [
         ("1. OBJETIVO DO ESTUDO",
          "O objetivo deste estudo é avaliar se uma palmilha inteligente inovadora (desenvolvida com sensores eletrônicos de baixo custo "
-         "capazes de medir simultaneamente a pressão em pontos críticos da sola do pé, a temperatura e a umidade interna do calçado) funciona "
-         "de maneira precisa quando comparada a uma esteira eletrônica de pressão (baropodômetro), já utilizada na Policlínica Piquet Carneiro. "
-         "O estudo busca contribuir diretamente para a prevenção precoce de feridas (úlceras) e amputações em pessoas com Diabetes Mellitus atendidas no SUS."),
+         "capazes de medir simultaneamente a pressão em pontos críticos da sola do pé, e sensor digital de alta precisão Sensirion SHT31-D "
+         "para temperatura e umidade relativa interna do calçado) funciona de maneira precisa quando comparada a uma esteira eletrônica "
+         "de pressão (baropodômetro), já utilizada na Policlínica Piquet Carneiro. O estudo busca contribuir diretamente para a prevenção precoce "
+         "de feridas (úlceras) e amputações em pessoas com Diabetes Mellitus atendidas no SUS."),
 
         ("2. COMO SERÁ A SUA PARTICIPAÇÃO (PROCEDIMENTOS)",
          "A sua participação ocorrerá em uma única sessão presencial de cerca de 20 a 30 minutos na Policlínica Piquet Carneiro (PPC/UERJ):\n"
@@ -596,7 +601,7 @@ def create_tcle_doc():
         ("3. POTENCIAIS RISCOS E MEDIDAS DE SEGURANÇA",
          "Os riscos envolvidos nesta pesquisa são considerados MÍNIMOS:\n"
          "• Risco de leve cansaço ou desequilíbrio durante os passos: Para evitar qualquer tropeço, a caminhada é de curta distância em piso totalmente plano, sempre supervisionada de perto pelo pesquisador, que estará ao seu lado pronto para dar apoio físico.\n"
-         "• Segurança Elétrica e Ergonômica: O módulo de processamento eletrônico (Wemos Lolin D32) é ultraleve (pesa apenas 7,5 gramas) e é alimentado por uma pequena bateria recarregável plana de Polímero de Lítio (LiPo 3,7V e 600mAh), equipada com conector polarizado de segurança JST PH 2.0mm. Trata-se de uma voltagem extremamente baixa (semelhante à de fones de ouvido sem fio), com circuito de proteção que elimina qualquer possibilidade de choque elétrico, curto-circuito ou aquecimento.\n"
+         "• Segurança Elétrica e Ergonômica: O módulo de processamento eletrônico (Wemos Lolin D32) é ultraleve (pesa apenas 7,5 gramas) e é alimentado por uma pequena bateria recarregável plana de Polímero de Lítio (LiPo 3,7V e 600mAh), equipada com conector polarizado de segurança JST PH 2.0mm. O sensor térmico e de umidade (Sensirion SHT31-D) é ultraplano e miniaturizado, não causando pontos de atrito ou pressão na sola do pé. Trata-se de uma voltagem extremamente baixa, com circuito de proteção que elimina qualquer possibilidade de choque elétrico, curto-circuito ou aquecimento.\n"
          "• Biossegurança e Higiene: A palmilha é rigorosamente higienizada e desinfetada com álcool a 70% antes e após cada participante, além do uso obrigatório de meia protetora descartável de uso individual.\n"
          "Você pode solicitar a interrupção imediata do teste a qualquer instante caso sinta qualquer incômodo."),
 
@@ -748,9 +753,10 @@ def create_isencao_doc():
         f"instituição envolvida (Policlínica Piquet Carneiro, Hospital Universitário Pedro Ernesto ou Universidade do Estado "
         f"do Rio de Janeiro), nem tampouco para os participantes voluntários da pesquisa.\n\n"
         f"Declaro que todos os custos referentes aos componentes do protótipo da palmilha instrumentada (microcontrolador "
-        f"Wemos Lolin D32, sensores FSR 402, sensores DHT22, bateria LiPo 3.7V 600mAh com conector JST PH 2.0mm e insumos), "
-        f"avaliados em {CUSTO_UNITARIO}, bem como os insumos de proteção individual e assepsia (álcool a 70% e meias descartáveis de barreira) "
-        f"são integralmente custeados com recursos próprios do pesquisador discente, sem demandar verbas orçamentárias do Sistema Único de Saúde (SUS)."
+        f"Wemos Lolin D32 V1, sensores FSR 402, sensor de alta precisão Sensirion SHT31-D, bateria LiPo 3.7V 600mAh com conector "
+        f"JST PH 2.0mm e insumos), avaliados em {CUSTO_UNITARIO}, bem como os insumos de proteção individual e assepsia "
+        f"(álcool a 70% e meias descartáveis de barreira) são integralmente custeados com recursos próprios do pesquisador discente, "
+        f"sem demandar verbas orçamentárias do Sistema Único de Saúde (SUS)."
     )
 
     p_ass = doc.add_paragraph()
@@ -898,10 +904,10 @@ def create_instrumento_coleta_doc():
             if ci == 0:
                 r.font.bold = True
 
-    # Seção 4: Microclima (DHT22) e Usabilidade
+    # Seção 4: Microclima de Alta Precisão (Sensirion SHT31-D via I2C) e Usabilidade
     p_s4 = doc.add_paragraph()
     format_paragraph(p_s4, 10, 3, 1.15)
-    r4 = p_s4.add_run("4. MONITORAMENTO MICROCLIMÁTICO (DHT22) E USABILIDADE DO PROTÓTIPO")
+    r4 = p_s4.add_run("4. MONITORAMENTO MICROCLIMÁTICO (SENSIRION SHT31-D I2C) E USABILIDADE")
     r4.font.bold = True
     r4.font.color.rgb = RGBColor(20, 50, 100)
 
@@ -912,10 +918,10 @@ def create_instrumento_coleta_doc():
     t4.columns[2].width = Inches(2.3)
 
     c_clima = [
-        ("Temperatura Inicial (pré-marcha):", "_______ ºC"),
-        ("Temperatura Final (pós-marcha):", "_______ ºC (ΔT = ______ ºC)"),
-        ("Umidade Relativa Inicial:", "_______ %"),
-        ("Umidade Relativa Final:", "_______ % (ΔUR = ______ %)")
+        ("Temperatura SHT31 Inicial (pré-marcha):", "_______ ºC (Precisão ±0,3ºC)"),
+        ("Temperatura SHT31 Final (pós-marcha):", "_______ ºC (ΔT = ______ ºC)"),
+        ("Umidade Relativa SHT31 Inicial:", "_______ % (Precisão ±2% UR)"),
+        ("Umidade Relativa SHT31 Final:", "_______ % (ΔUR = ______ %)")
     ]
     for idx, (lbl, val) in enumerate(c_clima):
         ri = idx // 2
@@ -941,7 +947,7 @@ def create_instrumento_coleta_doc():
     set_cell_margins(c_aval2, 60, 60, 80, 80)
     set_cell_border(c_aval2, sz="2")
     p_a2 = c_aval2.paragraphs[0]
-    p_a2.add_run("Conforto e Leveza (Módulo 7,5g):\n(1 a 5, 5 = Muito confortável e leve)\nNota do Paciente: [    ]").font.size = Pt(8.5)
+    p_a2.add_run("Conforto e Usabilidade (Perfil Ultraplano):\n(1 a 5, 5 = Muito confortável e imperceptível)\nNota do Paciente: [    ]").font.size = Pt(8.5)
 
     # Checklist de Biossegurança
     p_bio = doc.add_paragraph()
@@ -953,13 +959,14 @@ def create_instrumento_coleta_doc():
     p_check = doc.add_paragraph()
     format_paragraph(p_check, 2, 4, 1.15)
     p_check.add_run(
-        "[  ] Desinfecção mecânica da palmilha com álcool 70% realizada antes do início do teste.\n"
+        "[  ] Desinfecção mecânica da palmilha e superfícies com álcool 70% realizada antes do teste.\n"
         "[  ] Colocação de meia descartável nova no pé do voluntário antes de calçar a palmilha.\n"
         "[  ] Inspeção física do pé do voluntário (ausência de feridas abertas ou úlceras ativas).\n"
-        "[  ] Verificação da fixação do conector JST PH 2.0mm e isolamento da bateria LiPo 600mAh.\n"
-        "[  ] Confirmação da gravação de segurança no cartão MicroSD do Wemos Lolin D32.\n"
+        "[  ] Verificação da integridade do conector JST PH 2.0mm e bateria LiPo 600mAh.\n"
+        "[  ] Verificação da conexão do barramento I2C do sensor SHT31-D (endereço 0x44 ativo).\n"
+        "[  ] Confirmação da gravação de redundância no cartão MicroSD do Wemos Lolin D32.\n"
         "[  ] Desinfecção com álcool 70% repetida imediatamente após o término do ensaio.\n"
-        "[  ] Ausência de dor aguda, desequilíbrio ou sensação de aquecimento térmico anômalo."
+        "[  ] Ausência de dor, atrito mecânico, calosidade ou aquecimento térmico anômalo."
     ).font.size = Pt(8.5)
 
     p_sign = doc.add_paragraph()
@@ -1009,14 +1016,15 @@ def create_projeto_integra_doc():
         f"a esporadicidade das consultas clínicas tradicionais e o custo proibitivo dos sistemas comerciais de baropodometria "
         f"e palmilhas laboratoriais. Este projeto propõe e valida uma arquitetura vestível de baixo custo ({CUSTO_UNITARIO}) "
         f"baseada no microcontrolador Wemos Lolin D32 (ESP32 ESP-WROOM-32, 240MHz, 16MB Flash, 8MB PSRAM, slot MicroSD/TF e peso de 7,5g), "
-        f"3 sensores piezorresistivos de pressão plantar FSR 402, 1 sensor digital de temperatura e umidade DHT22, alimentada por bateria plana "
-        f"de Polímero de Lítio (LiPo 3.7V 600mAh com conector polarizado JST PH 2.0mm) e conectada via Bluetooth Low Energy (BLE) ao aplicativo "
-        f"móvel 'Monitor do Pé'. A camada analítica incorpora um modelo preditivo baseado em Random Forest para estimativa precoce de risco "
-        f"de ulceração plantar. Para transpor a viabilidade técnica de bancada em evidência biomecânica e clínica, este estudo visa calibrar "
+        f"3 sensores piezorresistivos de pressão plantar FSR 402, 1 sensor digital de alta precisão Sensirion SHT31-D (comunicação I2C, "
+        f"resolução de ±0,3°C de temperatura e ±2% de umidade relativa), alimentada por bateria plana de Polímero de Lítio (LiPo 3.7V 600mAh "
+        f"com conector polarizado JST PH 2.0mm) e conectada via Bluetooth Low Energy (BLE) ao aplicativo móvel 'Monitor do Pé'. "
+        f"A camada analítica incorpora um modelo preditivo baseado em Random Forest para estimativa precoce de risco de ulceração "
+        f"plantar. Para transpor a viabilidade técnica de bancada em evidência biomecânica e clínica, este estudo visa calibrar "
         f"as leituras analógicas do Lolin D32 com o baropodômetro padrão-ouro da Policlínica Piquet Carneiro (PPC/UERJ) e executar "
         f"ensaio piloto de prova de conceito com 3 a 5 voluntários adultos portadores de Diabetes Mellitus tipo 2. "
         f"A pesquisa cumpre estritamente a Resolução CNS nº 466/2012, oferecendo riscos mínimos mitigados por rígidos protocolos "
-        f"de biossegurança, design ergonômico ultraleve e supervisão presencial, com obtenção voluntária de TCLE e isenção total de custos institucionais."
+        f"de biossegurança, design ergonômico e ultraleve, com obtenção voluntária de TCLE e isenção total de custos institucionais."
     )
 
     capitulos = [
@@ -1026,30 +1034,31 @@ def create_projeto_integra_doc():
          f"a Neuropatia Periférica Diabética (NPD), presente em até 50% dos pacientes de longa data. A perda da sensibilidade protetora dolorosa "
          f"e proprioceptiva impede que o indivíduo perceba traumas contínuos e picos de pressão plantar anômalos durante a locomoção diária, "
          f"culminando na formação de úlceras e, em estágios avançados, em amputações de membros inferiores.\n\n"
-         f"Além da hiperpressão mecânica, a temperatura plantar elevada sinaliza processos inflamatórios teciduais subclínicos, e a umidade "
-         f"relativa acumulada no interior do calçado — frequentemente negligenciada pela literatura científica — atua acelerando a maceração "
-         f"epidérmica e propiciando infecções secundárias. Apesar da eficácia diagnóstica da baropodometria computadorizada, seus custos "
-         f"impedem a universalização na Atenção Primária à Saúde. O desenvolvimento de uma palmilha inteligente instrumentada de baixo custo "
-         f"({CUSTO_UNITARIO}), baseada no microcontrolador Wemos Lolin D32 (7,5g) e bateria LiPo de 600mAh com conector JST PH 2.0mm, "
-         f"integrada a algoritmos de Inteligência Artificial (Random Forest) e operada no ecossistema de Telessaúde e Saúde Digital, "
-         f"oferece uma resposta transformadora para o SUS. A Policlínica Piquet Carneiro (PPC/UERJ) oferece o ambiente acadêmico e assistencial "
-         f"ideal para calibrar os sensores e demonstrar a viabilidade clínica do protótipo frente ao padrão-ouro."),
+         f"Além da hiperpressão mecânica, a elevação da temperatura plantar sinaliza processos inflamatórios teciduais subclínicos "
+         f"(assimetrias > 2,2°C indicam risco iminente de lesão), enquanto a umidade relativa acumulada no interior do calçado atua "
+         f"acelerando a maceração epidérmica e propiciando infecções bacterianas e fúngicas secundárias. Para capturar essas variáveis "
+         f"com confiabilidade clínica e formato minimamente invasivo, a substituição de sensores analógicos ou de baixa precisão pelo "
+         f"sensor digital Sensirion SHT31-D (com verdadeira interface I2C, precisão de ±0,3°C e ±2% UR, e perfil ultraplano) representa "
+         f"um salto de qualidade metrológica e ergonômica. Integrado à placa Wemos Lolin D32 (7,5g) e alimentado por bateria LiPo de 600mAh "
+         f"com conector JST PH 2.0mm, o sistema viabiliza uma solução de baixo custo ({CUSTO_UNITARIO}) perfeitamente alinhada às necessidades "
+         f"do SUS. A Policlínica Piquet Carneiro (PPC/UERJ) oferece o ambiente acadêmico e assistencial ideal para calibrar os sensores e "
+         f"demonstrar a viabilidade clínica do protótipo frente ao padrão-ouro da baropodometria."),
 
         ("2. HIPÓTESES E OBJETIVOS",
          "2.1. Hipótese Científica:\n"
-         "Uma arquitetura vestível compacta e de baixo custo baseada no microcontrolador Wemos Lolin D32, bateria LiPo 600mAh e sensores FSR 402 e DHT22 "
-         "é capaz de apresentar correlação estatística significativa com a plataforma de baropodometria convencional, viabilizando o monitoramento preventivo "
-         "ergonômico, seguro e contínuo do pé diabético no ambiente do SUS.\n\n"
+         "Uma arquitetura vestível compacta e de baixo custo baseada no microcontrolador Wemos Lolin D32, bateria LiPo 600mAh, sensores FSR 402 "
+         "e sensor digital I2C Sensirion SHT31-D é capaz de apresentar correlação estatística significativa com a plataforma de baropodometria "
+         "convencional, viabilizando o monitoramento preventivo ergonômico, seguro e contínuo do pé diabético no ambiente do SUS.\n\n"
          "2.2. Objetivo Geral:\n"
          f"Projetar, calibrar e validar funcionalmente uma arquitetura de baixo custo para monitoramento preventivo do pé diabético através "
          f"de palmilha inteligente instrumentada e modelo preditivo baseado em Random Forest, realizando ensaios comparativos de calibração "
          f"e prova de conceito na Policlínica Piquet Carneiro (PPC/UERJ).\n\n"
          "2.3. Objetivos Específicos:\n"
-         "• Parametrizar a resposta estática e dinâmica dos sensores FSR 402 e DHT22 no Wemos Lolin D32 com filtro de média móvel no firmware;\n"
+         "• Parametrizar a resposta estática e dinâmica dos sensores FSR 402 e do sensor Sensirion SHT31-D (I2C) no Wemos Lolin D32 com firmware otimizado;\n"
          "• Realizar a calibração cruzada com o baropodômetro da PPC para correlacionar leituras de ADC (0 a 4095) com grandezas em kPa;\n"
          "• Executar a prova de conceito com 3 a 5 voluntários adultos com Diabetes Mellitus tipo 2 em ortostase e marcha curta;\n"
-         "• Avaliar a estabilidade da transmissão BLE com o app 'Monitor do Pé', a redundância de dados no cartão MicroSD da placa e o conforto percebido;\n"
-         "• Estruturar a base de dados para treinamento e refinamento do modelo preditivo Random Forest."),
+         "• Avaliar a estabilidade da transmissão BLE com o app 'Monitor do Pé', o backup de dados no cartão MicroSD e o conforto ergonômico do SHT31-D;\n"
+         "• Estruturar a base de dados clínicos e sensoriais para treinamento e refinamento do modelo preditivo Random Forest."),
 
         ("3. MATERIAL E MÉTODOS",
          "3.1. Delineamento:\n"
@@ -1068,12 +1077,13 @@ def create_projeto_integra_doc():
          "• Amputações prévias maiores ou deformidades osteoarticulares severas que impeçam a permanência em ortostase por 5 minutos;\n"
          "• Histórico de hipersensibilidade de contato a materiais poliméricos ou látex.\n\n"
          "3.5. Componentes Tecnológicos e Arquitetura de Hardware:\n"
-         f"O sistema utiliza a arquitetura refinada com especificações avançadas de portabilidade: palmilha com espessura de 30 mm contendo "
-         f"3 sensores piezorresistivos FSR 402 nas zonas de maior estresse (antepé e retropé); sensor digital de temperatura e umidade DHT22; "
-         f"placa microcontroladora Wemos Lolin D32 V1 (baseada no ESP32 ESP-WROOM-32, clock de 240MHz, 16MB Flash, 8MB PSRAM, slot TF/MicroSD "
-         f"para backup local de dados, dimensões de 65x25,4mm e peso de apenas 7,5g); alimentação por bateria plana de Polímero de Lítio "
-         f"(LiPo 3.7V 600mAh) conectada via conector polarizado JST PH 2.0mm com circuito de recarga integrado de até 500mA; aplicativo móvel "
-         f"'Monitor do Pé' em HTML5/JS com mapa anatômico colorido e alertas sonoros/visuais via Bluetooth Low Energy (BLE).\n\n"
+         f"O sistema utiliza hardware refinado com alto padrão metrológico: palmilha polimérica de 30 mm contendo 3 sensores piezorresistivos "
+         f"FSR 402 nas zonas de maior estresse (antepé e retropé); sensor digital de temperatura e umidade Sensirion SHT31-D, conectado por "
+         f"barramento I2C aos pinos SDA/SCL com pull-ups nativos de 10k, alimentado a 3.3V com precisão de ±0,3°C e ±2% UR e espessura milimétrica "
+         f"que não gera relevo plantar; placa microcontroladora Wemos Lolin D32 V1 (baseada no ESP32 ESP-WROOM-32, clock de 240MHz, 16MB Flash, "
+         f"8MB PSRAM, slot TF/MicroSD para backup local de dados, dimensões de 65x25,4mm e peso de apenas 7,5g); alimentação por bateria plana "
+         f"de Polímero de Lítio (LiPo 3.7V 600mAh) conectada via conector polarizado JST PH 2.0mm com circuito de recarga integrado de até 500mA; "
+         f"aplicativo móvel 'Monitor do Pé' em HTML5/JS com mapa anatômico colorido e alertas sonoros/visuais via Bluetooth Low Energy (BLE).\n\n"
          "3.6. Protocolo Experimental e Biossegurança na PPC:\n"
          "Os testes ocorrerão no setor de baropodometria da PPC. O voluntário calçará meia descartável estéril e calçado com a palmilha. Serão executados "
          "3 ensaios estáticos de 10 segundos e 3 passadas dinâmicas sobre a esteira de pressão. A desinfecção com álcool 70% é realizada antes e após "
@@ -1082,7 +1092,8 @@ def create_projeto_integra_doc():
         ("4. ASPECTOS ÉTICOS (RESOLUÇÃO CNS Nº 466/2012)",
          "4.1. Avaliação e Mitigação de Riscos:\n"
          "• Risco Mecânico / Queda: Classificado como MÍNIMO. A marcha é de curtíssimo percurso, em superfície plana antiderrapante, com o pesquisador "
-         "ao lado para suporte físico imediato. A extrema leveza do conjunto Lolin D32 + LiPo 600mAh (< 25g) não altera o padrão cinemático da marcha.\n"
+         "ao lado para suporte físico imediato. A extrema leveza do conjunto Lolin D32 + LiPo 600mAh (< 25g) e o perfil ultraplano do sensor SHT31-D "
+         "não causam atrito nem alteram o padrão cinemático da marcha.\n"
          "• Risco Elétrico / Térmico: NULO. A bateria LiPo de 3,7V e 600mAh possui conector JST PH 2.0mm com polaridade garantida e circuito integrado "
          "de proteção térmica e de sobrecorrente, operando em corrente contínua de baixíssima voltagem com isolamento total.\n"
          "• Risco Biológico: Eliminado pelo uso de barreiras mecânicas descartáveis (meias de uso único) e assepsia integral com álcool 70% entre voluntários.\n"
@@ -1096,7 +1107,7 @@ def create_projeto_integra_doc():
 
         ("5. CRONOGRAMA DE EXECUÇÃO FÍSICA",
          "O cronograma foi estritamente planejado para que nenhuma atividade de campo com seres humanos ocorra antes da aprovação final pelo CEP/HUPE:\n"
-         "• Setembro/2026: Conclusão da qualificação de mestrado e consolidação dos testes de bancada do protótipo com Wemos Lolin D32 e LiPo 600mAh;\n"
+         "• Setembro/2026: Conclusão da qualificação de mestrado e consolidação dos testes de bancada do protótipo com Wemos Lolin D32, LiPo 600mAh e Sensirion SHT31-D;\n"
          "• Outubro/2026: Submissão do protocolo na Plataforma Brasil (prazo limite de 05/10/2026 para reunião de 15/10/2026 do CEP/HUPE);\n"
          "• Novembro/2026: Obtenção do parecer de aprovação ética consubstanciado do CEP/HUPE e parametrização na PPC;\n"
          "• Dezembro/2026 a Janeiro/2027: Recrutamento, coleta comparativa com baropodômetro e prova de conceito com os voluntários na PPC;\n"
@@ -1114,7 +1125,8 @@ def create_projeto_integra_doc():
          "4. BORGES, L. E. Monitoramento da temperatura dos pés de pacientes diabéticos através de termometria cutânea. Tese (Doutorado) – Universidade de São Paulo, 2023.\n"
          "5. KHANDAKAR, A. et al. A machine learning-based smart insole for early detection of diabetic foot ulcer. Sensors, v. 22, n. 19, p. 7183, 2022.\n"
          "6. KOSAJI, M. et al. Influence of in-shoe humidity on skin barrier function in diabetic neuropathy. Journal of Diabetes Science and Technology, 2025.\n"
-         "7. NOUMAN, M.; RAHMAN, M. Wearable insole for continuous plantar pressure and gait assessment. IEEE Transactions on Biomedical Circuits and Systems, 2025.")
+         "7. NOUMAN, M.; RAHMAN, M. Wearable insole for continuous plantar pressure and gait assessment. IEEE Transactions on Biomedical Circuits and Systems, 2025.\n"
+         "8. SENSIRION. Datasheet SHT3x-DIS: Humidity and Temperature Sensor. Stäfa: Sensirion AG, 2021.")
     ]
 
     for c_title, c_text in capitulos:
@@ -1134,11 +1146,11 @@ def create_projeto_integra_doc():
     print(f"Salvo com sucesso: {out_path}")
 
 if __name__ == "__main__":
-    print("Iniciando geração com as novas especificações de hardware (Wemos Lolin D32 + LiPo 600mAh)...")
+    print("Iniciando geração com o sensor Sensirion SHT31-D (I2C)...")
     create_portfolio_doc()
     create_anuencia_doc()
     create_tcle_doc()
     create_isencao_doc()
     create_instrumento_coleta_doc()
     create_projeto_integra_doc()
-    print("Todos os documentos Word foram atualizados com sucesso!")
+    print("Todos os documentos Word foram atualizados com o Sensirion SHT31-D com sucesso!")
