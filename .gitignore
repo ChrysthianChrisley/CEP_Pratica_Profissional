@@ -3,6 +3,9 @@
 ~$*.doc
 *.tmp
 
+# Cópia raiz temporária em uso
+/Projeto_de_Pesquisa_Integra_Palmilha_Inteligente.docx
+
 # Arquivos de ambiente Python
 __pycache__/
 *.py[cod]
