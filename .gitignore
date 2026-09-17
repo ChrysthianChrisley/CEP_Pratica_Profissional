@@ -1,0 +1,19 @@
+# Arquivos temporários do Microsoft Office / Word
+~$*.docx
+~$*.doc
+*.tmp
+
+# Arquivos de ambiente Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Arquivos de sistema operacional
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
